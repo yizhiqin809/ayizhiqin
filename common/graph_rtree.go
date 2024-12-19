@@ -6,14 +6,14 @@ import (
 	"math"
 )
 
-func RtreegoRect(r Rectangle) *rtreego.Rect {
+func RtreegoRect(r Rectangle) rtreego.Rect {
 	dx := math.Max(0.00000001, r.Max.X - r.Min.X)
 	dy := math.Max(0.00000001, r.Max.Y - r.Min.Y)
 	rect, err := rtreego.NewRect(rtreego.Point{r.Min.X, r.Min.Y}, []float64{dx, dy})
 	if err != nil {
 		panic(err)
 	}
-	return &rect
+	return rect
 }
 
 type edgeSpatial struct {

@@ -13,7 +13,7 @@ func RtreegoRect(r Rectangle) *rtreego.Rect {
 	if err != nil {
 		panic(err)
 	}
-	return rect
+	return &rect
 }
 
 type edgeSpatial struct {

@@ -35,10 +35,10 @@ type Rtree struct {
 }
 
 func (rtree Rtree) Search(rect Rectangle) []*Edge {
-	spatials := rtree.tree.SearchIntersect(RtreegoRect(rect))
+	spatials := rtree.tree.SearchIntersect(RtreegoRect(*rect))
 	edges := make([]*Edge, len(spatials))
 	for i := range spatials {
-		edges[i] = spatials[i].(*edgeSpatial).edge
+		edges[i] = spatials[i].(edgeSpatial).edge
 	}
 	return edges
 }

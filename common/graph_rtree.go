@@ -13,7 +13,7 @@ func RtreegoRect(r Rectangle) *rtreego.Rect {
 	if err != nil {
 		panic(err)
 	}
-	return &rect
+	return rect
 }
 
 type edgeSpatial struct {
@@ -26,9 +26,8 @@ func (e *edgeSpatial) Bounds() *rtreego.Rect {
 		r := e.edge.Src.Point.Rectangle()
 		r = r.Extend(e.edge.Dst.Point)
 		e.rect = RtreegoRect(r)
-		return rect
 	}
-	return *e.rect
+	return e.rect
 }
 
 type Rtree struct {
@@ -36,14 +35,10 @@ type Rtree struct {
 }
 
 func (rtree Rtree) Search(rect Rectangle) []*Edge {
-	spatials := rtree.tree.SearchIntersect(*RtreegoRect(*rect))
+	spatials := rtree.tree.SearchIntersect(RtreegoRect(rect))
 	edges := make([]*Edge, len(spatials))
 	for i := range spatials {
-		if spatial, ok := spatials[i].(edgeSpatial); ok {
-            edges[i] = spatial.edge
-			}else{
-			continue
-		}
+		edges[i] = spatials[i].(*edgeSpatial).edge
 	}
 	return edges
 }
